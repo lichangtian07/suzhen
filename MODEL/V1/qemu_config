@@ -1,0 +1,23 @@
+
+
+export ARCH=arm
+export CROSS_COMPILE=$(CURDIR)/gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabi/bin/arm-linux-gnueabi-
+
+export QEMU_VERSION=5.2.0
+export UBOOT_VERSION=2021.01
+export KERNEL_VERSION=5.11
+export BUSYBOX_VERSION=1.33.0
+
+export QEMU_TAR=qemu-$(QEMU_VERSION).tar.xz
+export UBOOT_TAR=u-boot-$(KERNEL_VERSION).tar.bz2
+export KERNEL_TAR=linux-$(UBOOT_VERSION).tar.xz
+export BUSYBOX_TAR=busybox-$(BUSYBOX_VERSION).tar.xz
+
+
+export UBOOT_CONF=vexpress_ca9x4_defconfig 
+export KERNEL_CONF=vexpress_defconfig
+
+
+
+
+
