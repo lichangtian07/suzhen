@@ -66,7 +66,7 @@ CROSS_DIR=$(TOOLCHAIN_DIR)/bin/
 #ARCH=$(ARCH_OBJ)
 
 
-.PHONY:all
+.PHONY:all u-boot kernel busybox
 
 
 all: prepare qemu_build u-boot kernel busybox 
@@ -136,7 +136,7 @@ u-boot_menuconfig:
 u-boot:
 	echo "############ do u-boot compile #######"
 	#make -C $(UBOOT_DIR) $(UBOOT_CONF) 
-	make -C $(UBOOT_DIR) CROSS_COMPILE=$(CROSS_DIR)/$(CROSS_COMPILE_OBJ) ARCH=$(ARCH_OBJ)	
+	make -C $(UBOOT_DIR) CROSS_COMPILE=$(CROSS_DIR)/$(CROSS_COMPILE_OBJ) ARCH=$(ARCH_OBJ)
 	echo "############ u-boot end #########"
 
 u-boot_clean:
