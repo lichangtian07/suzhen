@@ -100,7 +100,9 @@ prepare:
 	fi
 	@if [ ! -d "$(TOOLCHAIN_DIR)" ]; then \
 		tar -xvf $(TOOLCHAIN_TAR_DIR)/$(TOOLCHAIN_TAR) -C $(BUILD_DIR)/ ;\
-	fi 
+	fi
+	cp  -rf $(CURDIR)/MODEL/$(MODEL)/make_rootfs.sh $(BUILD_DIR)/ 
+	cp  -rf $(CURDIR)/MODEL/$(MODEL)/run.sh $(BUILD_DIR)/ 
 	@echo "############ prepare end ##############"
 
 qemu_build:
@@ -180,17 +182,17 @@ busybox_menuconfig:
 
 busybox:
 	echo "########## make busybox ##############"
-	make -C $(BUSYBOX_DIR)
+	make -C $(BUSYBOX_DIR) CROSS_COMPILE=$(CROSS_DIR)/$(CROSS_COMPILE_OBJ) ARCH=$(ARCH_OBJ)
 	echo "########## busybox end ###############"
 
 busybox_install:
 	echo "########## make busybox_install ##############"
-	make -C $(BUSYBOX_DIR) install
+	make -C $(BUSYBOX_DIR) CROSS_COMPILE=$(CROSS_DIR)/$(CROSS_COMPILE_OBJ) ARCH=$(ARCH_OBJ) install
 	echo "########## busybox_install end ###############"
 
 busybox_clean:
 	echo "########## make busybox clean ##############"
-	make -C $(BUSYBOX_DIR) clean 
+	make -C $(BUSYBOX_DIR) CROSS_COMPILE=$(CROSS_DIR)/$(CROSS_COMPILE_OBJ) ARCH=$(ARCH_OBJ) clean 
 	echo "########## busybox clean  ##################"
 
 busybox_distclean:

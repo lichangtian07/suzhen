@@ -43,7 +43,7 @@ mknod rootfs/dev/tty4 c 4 4
 mknod rootfs/dev/console c 5 1
 mknod rootfs/dev/null c 1 3
 
-${CROSS_COMPILE_DIR}/bin/arm-linux-gnuebi-strip rootfs/lib/*
+${CROSS_COMPILE_DIR}/bin/arm-linux-gnueabi-strip rootfs/lib/*
 
 dd if=/dev/zero of=a9rootfs.ext3 bs=1M count=128
 # 如果提示 "No space left on device" 证明 dd 命令中 count 的大小不够，可以先进行瘦身

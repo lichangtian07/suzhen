@@ -16,16 +16,22 @@ QEMU_CMD_ARM=/opt/qemu/bin/qemu-system-arm
 #    ${QEMU_CMD_ARM} -M vexpress-a9 -m 256 -kernel ${UBOOT_DIR}/u-boot -nographic
 #fi
 
+run_uboot(){
+	echo "emultar $1 "
+	#${QEMU_CMD_ARM} -M vexpress-a9 -m 256 -kernel $1/$2 -nographic -device virtio-net-device,netdev=tap0 -netdev tap,id=tap0,ifname=tap0 -sd ./a9rootfs.ext3
+	${QEMU_CMD_ARM} -M vexpress-a9 -m 256 -kernel $1/$2 -nographic -net nic -net tap,ifname=tap0 
+}
+
 run_uboot_nfs(){
 	echo "emultar $1 "
 	#${QEMU_CMD_ARM} -M vexpress-a9 -m 256 -kernel $1/$2 -nographic -device virtio-net-device,netdev=tap0 -netdev tap,id=tap0,ifname=tap0 -sd ./a9rootfs.ext3
 	${QEMU_CMD_ARM} -M vexpress-a9 -m 256 -kernel $1/$2 -nographic -net nic -net tap,ifname=tap0 
 }
 
-run_uboot(){
+run_uboot_nfs_fs(){
 	echo "emultar $1 "
 	#${QEMU_CMD_ARM} -M vexpress-a9 -m 256 -kernel $1/$2 -nographic -device virtio-net-device,netdev=tap0 -netdev tap,id=tap0,ifname=tap0 -sd ./a9rootfs.ext3
-	${QEMU_CMD_ARM} -M vexpress-a9 -m 256 -kernel $1/$2 -nographic -net nic -net tap,ifname=tap0 -sd ./a9rootfs.ext3
+	${QEMU_CMD_ARM} -M vexpress-a9 -m 256 -kernel $1/$2 -nographic -net nic -net tap,ifname=tap0 -sd $3
 }
 
 run_kernel(){
@@ -45,6 +51,7 @@ usage(){
 	echo "###################"
 	echo "for example:"
 	echo " ./run.sh uboot u-boot-2021.01 u-boot"
+	echo " ./run.sh uboot_nfs_fs u-boot-2021.01 u-boot"
 	echo " ./run.sh uboot_nfs u-boot-2021.01 u-boot"
 	echo " ./run.sh kernel linux-5.11/arch/arm/boot/ zImage dts/vexpress-v2p-ca9.dtb"
 	echo " ./run.sh rootfs linux-5.11/arch/arm/boot/ zImage dts/vexpress-v2p-ca9.dtb ./a9rootfs.ext3"
@@ -58,6 +65,7 @@ case "$1" in
 	kernel) shift 1; run_kernel $@;;
 	rootfs) shift 1; run_rootfs $@;;
 	uboot_nfs)  shift 1; run_uboot_nfs $@;;
+	uboot_nfs_fs)  shift 1; run_uboot_nfs_fs $@;;
 	*) usage ;;
 esac
 
