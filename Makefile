@@ -110,7 +110,7 @@ qemu_build:
 	@if [ ! -d "$(QEMU_DIR)/out" ]; then \
 		mkdir -p $(QEMU_DIR)/build ; \
 		mkdir -p $(QEMU_DIR)/out ;\
-		cd $(QEMU_DIR)/build && ../configure --prefix=$(QEMU_DIR)/out --target-list=arm-softmmu,i386-softmmu,x86_64-softmmu,aarch64-linux-user,arm-linux-user,i386-linux-user,x86_64-linux-user,aarch64-softmmu,mipsel-softmmu,mips64el-softmmu --audio-drv-list=alsa --enable-virtfs --enable-debug ;\
+		cd $(QEMU_DIR)/build && ../configure --prefix=$(QEMU_DIR)/out --target-list=arm-softmmu,i386-softmmu,x86_64-softmmu,aarch64-linux-user,arm-linux-user,i386-linux-user,x86_64-linux-user,aarch64-softmmu,mips-softmmu,mipsel-softmmu,mips64el-softmmu --audio-drv-list=alsa --enable-virtfs --enable-debug ;\
 	fi
 	make -C $(QEMU_DIR)/build 
 	make -C $(QEMU_DIR)/build install 
@@ -121,7 +121,7 @@ qemu_build:
 
 qemu_clean:
 	echo "########### do qemu_clean #########"
-	rm -rf $(QEMU_DIR)/out/*
+	rm -rf $(QEMU_DIR)/out
 	echo "########### qemu_clean done #########"
 
 qemu_distclean:
