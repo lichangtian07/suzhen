@@ -1,5 +1,23 @@
 # Qemu学习
 
+​      本文是为了完整梳理一遍嵌入式开发的所有先关工作而写，最后完成一个suzhen架构的平台开发。
+
+​      主要内容包括：
+
+​      qemu仿真的编译使用（造轮子）  学习仿真
+
+​      u-boot的代码编译与使用（造轮子）  学习移植
+
+​      kernel的代码编译与使用（造轮子） 学习内核，设备驱动等。
+
+​      busybox的代码编译与使用（造轮子）学习文件系统
+
+​      交叉编译工具链的编译与使用（还是造轮子）学习工具链
+
+​      suzhen架构目的是为了学习嵌入所有内容而设计的一个架构。与buildroot以及openwrt相比较，suzhen侧重qemu仿真（适合穷孩子），更灵活，代码更通俗（不是为了商业开花）。
+
+​      如果buildroot和openwrt是性能良好的奔驰宝马汽车，那suzhen架构是一个自行车。可以字节拆轮子装轮子，改发动机（Makefile）。并且自由的遛弯（qemu）。
+
 
 
 ## 一 概念介绍
@@ -1378,7 +1396,7 @@ qemu启动的文件系统rootfs
 
 
 
-![image-20210224110810378](C:/Users/liqiang6/AppData/Roaming/Typora/typora-user-images/image-20210224110810378.png)
+![image-20210224110810378](https://i.loli.net/2021/03/23/b4kzpcWv8iLCxTB.png)
 
 
 
@@ -1659,7 +1677,7 @@ cd crosstool-ng
 
 ```
 
-
+prefix指定了生成工具的路径是/home/xxxx/qemu/test1/cross-ng/crosstool-ng下的out文件夹，最后会在这个文件夹下看到bin文件夹，命令是下面ct-ng
 
 出现错误：
 
@@ -1682,7 +1700,7 @@ make
 make install
 ```
 
-![image-20210304142703847](C:/Users/liqiang6/AppData/Roaming/Typora/typora-user-images/image-20210304142703847.png)
+![image-20210304142703847](https://i.loli.net/2021/03/23/AQlbqhK13kFuZ8W.png)
 
 ```shell
 cd .. ##回到主目录即cross-ng目录
@@ -1727,9 +1745,46 @@ cd x86_64-cross
 
 ![image-20210304144505987](https://i.loli.net/2021/03/04/CsAjbLzvpZNGkfq.png)
 
+具体说明：
+
+（1）
+
+```shell
+Paths and misc options  ---> 
+  ....
+  (${HOME}/src) Local tarbalss directory #指定制作的编译器需要的依赖库压缩包的存储位置，默认.build/下
+  (${CT_PREFIX:-${HOME}/x-tools}/${CT_HOST:+HOST-${CT_HOST}/}${CT_TARGET}) Prefix directory #制作好的编译器放置路径位置
+ 
+
+```
+
+![image-20210315181104583](https://i.loli.net/2021/03/15/hdsrPnuNgo5aKcL.png)
+
+（2）
+
+```shell
+ Target options -->
+    Target Architecture(x86)---> #注意这项，是目标平台的架构
+ 
+```
+
+(3)
+
+```shell
+Toolchain options  ---> 
+   .....
+   (unknown) Tuple's vendor string   #可以修改个性化前缀，本次编译未修改。
+```
+
+
+
+
+
 ```shell
 ../crosstool-ng/out/bin/ct-ng build
 ```
+
+
 
 ![image-20210304144653954](https://i.loli.net/2021/03/04/5XwETUbAVQSCMzx.png)
 
@@ -1766,6 +1821,42 @@ ls .build/tarballs
 进入解压运行部分：
 
 解压后的位置 .build/src下
+
+
+
+最后编译完成： 
+
+被安装在此位置
+
+![image-20210315204104113](https://i.loli.net/2021/03/15/t2ILU4aWbs6Y15i.png)
+
+如下：
+
+![image-20210315204204888](https://i.loli.net/2021/03/23/Zr8pvhYkl6enyRW.png)
+
+
+
+打包一些就可以用了：
+
+
+
+现在测试一下：
+
+本机x86_64编译出来的 目标是x86_64的编译工具链是不是能用：（好像有点二）
+
+![image-20210315204538720](https://i.loli.net/2021/03/23/rEwYcDZUbKOgPQJ.png)
+
+可以用
+
+
+
+## FreeRTOS
+
+
+
+https://www.freertos.org/a00104.html
+
+
 
 
 
